@@ -5,9 +5,9 @@ services:
     environment:
       POSTGRES_USER: attus
       POSTGRES_PASSWORD: attus
-      PGDATA: /data/postgres
+      PGDATA: /var/lib/postgresql/data
     volumes:
-      - postgres:/data/postgres
+      - postgres:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
