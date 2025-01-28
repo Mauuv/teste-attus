@@ -3,9 +3,7 @@ package com.mauricio.attus.parte_envolvida;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import com.mauricio.attus.exception.ParteEnvolvidaNotFoundException;
 
 import lombok.RequiredArgsConstructor;
