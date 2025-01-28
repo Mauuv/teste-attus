@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.mauricio.attus.evento.EventoRequest;
 import com.mauricio.attus.evento.EventoService;
 import com.mauricio.attus.exception.ContratoNotFoundException;
-import com.mauricio.attus.parte_envolvida.ParteEnvolvidaClient;
 import com.mauricio.attus.parte_envolvida.ParteEnvolvidaContratoRequest;
 import com.mauricio.attus.parte_envolvida.ParteEnvolvidaContratoService;
 import com.mauricio.attus.parte_envolvida.ParteEnvolvidaResponse;
@@ -24,7 +23,6 @@ public class ContratoService {
 
     private final ContratoRepository repository;
     private final ContratoMapper mapper;
-    private final ParteEnvolvidaClient parteEnvolvidaClient;
     private final ParteEnvolvidaContratoService parteEnvolvidaContratoService;
     private final EventoService eventoService;
 
@@ -35,7 +33,7 @@ public class ContratoService {
                 ParteEnvolvidaContratoRequest::tipoParteEnvolvida
             ));
 
-        List<ParteEnvolvidaResponse> partesEnvolvidas = parteEnvolvidaClient.findAllPartesEnvolvidas(request.partesEnvolvidas());
+        List<ParteEnvolvidaResponse> partesEnvolvidas = parteEnvolvidaContratoService.findAllPartesEnvolvidas(request.partesEnvolvidas());
 
         Contrato contrato = repository.save(mapper.toContrato(request));
 

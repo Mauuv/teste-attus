@@ -16,7 +16,9 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @Setter
 @Entity
-@Table(name = "parte_envolvida")
+@Table(name = "parte_envolvida", indexes = {
+    @Index(name = "idx_cpf_cnpj", columnList = "cpf_cnpj")
+})
 public class ParteEnvolvida {
 
     @Id

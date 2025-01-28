@@ -58,6 +58,11 @@ public class ParteEnvolvidaController {
         return ResponseEntity.ok(service.findByIds(partesEnvolvidasIds));
     }
 
+    @GetMapping("/find-by/{cpf-cnpj}")
+    public ResponseEntity<ParteEnvolvidaResponse> findByCpfCnpj(@PathVariable("cpf-cnpj") String cpfCnpj) {
+        return ResponseEntity.ok(service.findByCpfCnpj(cpfCnpj));
+    }
+
     @DeleteMapping("/{parte-envolvida-id}")
     public ResponseEntity<Void> deleteById(@PathVariable("parte-envolvida-id") Integer parteEnvolvidaId) {
         return ResponseEntity.accepted().build();

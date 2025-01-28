@@ -75,4 +75,11 @@ public class ParteEnvolvidaService {
     public void deleteParteEnvolvida(Integer parteEnvolvidaId) {
         repository.deleteById(parteEnvolvidaId);
     }
+
+    public ParteEnvolvidaResponse findByCpfCnpj(String cpfCnpj) {
+        var parteEnvolvida = repository.findByCpfCnpj(cpfCnpj)
+            .orElseThrow(() -> new ParteEnvolvidaNotFoundException("Parte envolvida de CPF/CNPJ " + cpfCnpj + " não encontrada"));
+
+        return mapper.toParteEnvolvidaResponse(parteEnvolvida);
+    }
 }

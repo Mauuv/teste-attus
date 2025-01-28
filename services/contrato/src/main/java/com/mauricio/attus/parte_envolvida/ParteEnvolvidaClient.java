@@ -27,18 +27,18 @@ public class ParteEnvolvidaClient {
 
     public List<ParteEnvolvidaResponse> findAllPartesEnvolvidas(List<ParteEnvolvidaContratoRequest> requestBody) {
         var partesEnvolvidasId = requestBody.stream().map(ParteEnvolvidaContratoRequest::id).toList();
-        
         if (isAnyParteEnvolvidaInvalid(partesEnvolvidasId)) {
-            throw new InvalidParteEnvolvidaException("Partes envolvidas selecionadas para o contrato são inválidas");
+            throw new InvalidParteEnvolvidaException("Algumas partes envolvidas adicionadas ao contrato são inválidas");
         }
         
         HttpHeaders headers = new HttpHeaders();
+        String url = parteEnvolvidaUrl + "/find-by-ids";
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<List<ParteEnvolvidaContratoRequest>> requestEntity = new HttpEntity<>(requestBody, headers);
         
         ParameterizedTypeReference<List<ParteEnvolvidaResponse>> responseType = new ParameterizedTypeReference<>() {};
 
-        ResponseEntity<List<ParteEnvolvidaResponse>> responseEntity = restTemplate.exchange(parteEnvolvidaUrl + "/find-by-ids", HttpMethod.GET, requestEntity, responseType);
+        ResponseEntity<List<ParteEnvolvidaResponse>> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, responseType);
         
         if (responseEntity.getStatusCode().isError()) {
             throw new BussinesException("Erro ao buscar/processar as partes envolvidas. Status code: " + responseEntity.getStatusCode());
@@ -49,14 +49,35 @@ public class ParteEnvolvidaClient {
 
     public boolean isAnyParteEnvolvidaInvalid(List<Integer> partesEnvolvidasId) {
         HttpHeaders headers = new HttpHeaders();
+        String url = parteEnvolvidaUrl + "/exists-all";
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
         HttpEntity<List<Integer>> requestEntity = new HttpEntity<>(partesEnvolvidasId, headers);
         
         ParameterizedTypeReference<Boolean> responseType = new ParameterizedTypeReference<>() {};
 
-        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(parteEnvolvidaUrl + "/exists-all", HttpMethod.GET, requestEntity, responseType);
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, responseType);
 
         return responseEntity.getStatusCode().isError() || !responseEntity.getBody();
     }
+
+    public Integer findIdByCpfCnpj(String cpfCnpj) {
+        HttpHeaders headers = new HttpHeaders();
+        String url = parteEnvolvidaUrl + "/find-by/" + cpfCnpj;
+
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ParameterizedTypeReference<ParteEnvolvidaResponse> responseType = new ParameterizedTypeReference<>() {};
+
+        ResponseEntity<ParteEnvolvidaResponse> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, responseType);
+
+        if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Error fetching data from external service");
+        }
+
+        return responseEntity.getBody().id();
+    }
+    
 }

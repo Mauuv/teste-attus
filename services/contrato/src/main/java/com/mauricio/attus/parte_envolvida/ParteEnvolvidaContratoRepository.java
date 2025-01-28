@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface ParteEnvolvidaContratoRepository extends JpaRepository<ParteEnvolvidaContrato, Integer> {
 
     List<ParteEnvolvidaContrato> findAllByContratoId(Integer contratoId);
+    List<ParteEnvolvidaContrato> findAllByParteEnvolvidaId(Integer parteEnvolvidaId);
 
 }

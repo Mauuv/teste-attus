@@ -10,8 +10,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ParteEnvolvidaContratoService {
 
-    public ParteEnvolvidaContratoRepository repository;
-    public ParteEnvolvidaContratoMapper mapper;
+    private final ParteEnvolvidaContratoRepository repository;
+    private final ParteEnvolvidaContratoMapper mapper;
+    private final ParteEnvolvidaClient parteEnvolvidaClient;
 
     public Integer saveParteEnvolvida(ParteEnvolvidaContratoRequest request) {
         var parteEnvolvidaContrato = mapper.toParteEnvolvidaContrato(request);
@@ -23,5 +24,17 @@ public class ParteEnvolvidaContratoService {
             .stream()
             .map(mapper::toParteEnvolvidaContratoResponse)
             .toList();
+    }
+
+    public List<ParteEnvolvidaContratoResponse> findByParteEnvolvidaCpfCnpj(String cpfCnpj) {
+        Integer parteEnvolvidaId = parteEnvolvidaClient.findIdByCpfCnpj(cpfCnpj);
+        return repository.findAllByParteEnvolvidaId(parteEnvolvidaId)
+            .stream()
+            .map(mapper::toParteEnvolvidaContratoResponse)
+            .toList();
+    }
+
+    public List<ParteEnvolvidaResponse> findAllPartesEnvolvidas(List<ParteEnvolvidaContratoRequest> partesEnvolvidas) {
+        return parteEnvolvidaClient.findAllPartesEnvolvidas(partesEnvolvidas);
     }
 }

@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.validation.annotation.Validated;
 
 import com.mauricio.attus.contrato.Contrato;
@@ -35,6 +33,6 @@ public class ParteEnvolvidaContrato {
     public Integer parteEnvolvidaId;
 
     @ManyToOne
-    @JoinColumn(name = "contract_id", nullable = false)
+    @JoinColumn(name = "contrato_id", nullable = false)
     public Contrato contrato;
 }

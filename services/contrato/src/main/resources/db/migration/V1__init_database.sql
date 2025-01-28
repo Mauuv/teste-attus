@@ -4,6 +4,8 @@ create table if not exists contrato (
     data_criacao timestamp not null default CURRENT_TIMESTAMP,
     descricao text,
     status_contrato varchar(50)
+    index idx_status_contrato (status_contrato),
+    index idx_data_criacao (data_criacao)
 );
 
 create table if not exists evento (
@@ -11,8 +13,8 @@ create table if not exists evento (
     tipo varchar(50) not null,
     data_registro timestamp not null default CURRENT_TIMESTAMP,
     descricao text,
-    contract_id integer not null,
-    constraint FK_evento_contrato foreign key (contract_id) references contrato (id) on delete cascade
+    contrato_id integer not null,
+    constraint FK_evento_contrato foreign key (contrato_id) references contrato (id) on delete cascade
 );
 
 create table if not exists parte_envolvida_contrato (

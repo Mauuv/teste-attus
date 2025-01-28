@@ -23,7 +23,10 @@ import com.mauricio.attus.parte_envolvida.ParteEnvolvidaContrato;
 @Getter
 @Setter
 @Entity
-@Table(name = "contrato")
+@Table(name = "contrato", indexes = {
+    @Index(name = "idx_status_contrato", columnList = "status_contrato"),
+    @Index(name = "idx_data_criacao", columnList = "data_criacao")
+})
 @Validated
 public class Contrato {
     @Id
