@@ -3,6 +3,7 @@ package com.mauricio.attus.parte_envolvida;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.mauricio.attus.exception.ParteEnvolvidaNotFoundException;
@@ -16,17 +17,18 @@ public class ParteEnvolvidaService {
     private final ParteEnvolvidaRepository repository;
     private final ParteEnvolvidaMapper mapper;
 
-    public ParteEnvolvida createParteEnvolvida(ParteEnvolvidaRequest request) {
+    public ParteEnvolvidaResponse createParteEnvolvida(ParteEnvolvidaRequest request) {
         ParteEnvolvida parteEnvolvida = repository.save(mapper.toParteEnvolvida(request));
-        return parteEnvolvida;
+        return mapper.toParteEnvolvidaResponse(parteEnvolvida);
     }
 
-    public ParteEnvolvida updateParteEnvolvida(ParteEnvolvidaRequest request) {
+    public ParteEnvolvidaResponse updateParteEnvolvida(ParteEnvolvidaRequest request) {
         ParteEnvolvida parteEnvolvida = repository.findById(request.id())
             .orElseThrow(() -> new ParteEnvolvidaNotFoundException("Parte envolvida de id " + request.id() + " não encontrada"));
         mergeParteEnvolvida(parteEnvolvida, request);
-                return repository.save(parteEnvolvida);
-            }
+        parteEnvolvida = repository.save(parteEnvolvida);
+        return mapper.toParteEnvolvidaResponse(parteEnvolvida);
+    }
         
     private void mergeParteEnvolvida(ParteEnvolvida parteEnvolvida, ParteEnvolvidaRequest request) {
         if (StringUtils.isNotBlank(request.nome())) {
@@ -34,9 +36,6 @@ public class ParteEnvolvidaService {
         }
         if (StringUtils.isNotBlank(request.cpfCnpj())) {
             parteEnvolvida.setCpfCnpj(request.cpfCnpj());
-        }
-        if (request.tipo() != null) {
-            parteEnvolvida.setTipo(request.tipo());
         }
         if (request.contato() != null) {
             parteEnvolvida.setContato(request.contato());
@@ -54,9 +53,25 @@ public class ParteEnvolvidaService {
         return repository.findById(parteEnvolvidaId).isPresent();
     }
 
+    public Boolean existsByIdList(List<Integer> partesEnvolvidasIds) {
+        long count = repository.countByIds(partesEnvolvidasIds);
+        return count == partesEnvolvidasIds.size();
+    }
+
     public ParteEnvolvidaResponse findById(Integer parteEnvolvidaId) {
       return repository.findById(parteEnvolvidaId).map(mapper::toParteEnvolvidaResponse)
           .orElseThrow(() -> new ParteEnvolvidaNotFoundException("Parte envolvida de id " + parteEnvolvidaId + " não encontrada"));
+    }
+
+    public List<ParteEnvolvidaResponse> findByIds(List<Integer> partesEnvolvidasIds) {
+        if (partesEnvolvidasIds == null || partesEnvolvidasIds.isEmpty()) {
+            throw new IllegalArgumentException("The list of IDs cannot be null or empty");
+        }
+
+        return repository.findAllById(partesEnvolvidasIds)
+                .stream()
+                .map(mapper::toParteEnvolvidaResponse)
+                .toList();
     }
 
     public void deleteParteEnvolvida(Integer parteEnvolvidaId) {

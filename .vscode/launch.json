@@ -2,6 +2,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "ContratoApplication",
+      "request": "launch",
+      "mainClass": "com.mauricio.attus.ContratoApplication",
+      "projectName": "contrato"
+    },
+    {
+      "type": "java",
       "name": "Spring Boot-ConfigServerApplication<config-server>",
       "request": "launch",
       "cwd": "${workspaceFolder}",
@@ -30,7 +37,19 @@
       "mainClass": "com.mauricio.attus.ParteEnvolvidaApplication",
       "projectName": "parte-envolvida",
       "args": "",
-      "envFile": "${workspaceFolder}/.env"
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=54481 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=parte-envolvida"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-ParteEnvolvidaApplication<contrato>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.mauricio.attus.ParteEnvolvidaApplication",
+      "projectName": "contrato",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=64098 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=contrato"
     }
   ]
 }

@@ -14,7 +14,6 @@ public class ParteEnvolvidaMapper {
       .id(request.id())
       .nome(request.nome())
       .cpfCnpj(request.cpfCnpj())
-      .tipo(request.tipo())
       .contato(request.contato())
       .build();
   }
@@ -24,7 +23,7 @@ public class ParteEnvolvidaMapper {
       return null;
     }
     
-    return new ParteEnvolvidaResponse(parteEnvolvida.getId(), parteEnvolvida.getNome(), parteEnvolvida.getCpfCnpj(), parteEnvolvida.getTipo(), parteEnvolvida.getContato());
+    return new ParteEnvolvidaResponse(parteEnvolvida.getId(), parteEnvolvida.getNome(), parteEnvolvida.getCpfCnpj(), parteEnvolvida.getContato());
   }
 
 }

@@ -30,10 +30,6 @@ public class ParteEnvolvida {
     @Column(name = "cpf_cnpj")
     public String cpfCnpj;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    public TIPO_PARTE_ENVOLVIDA tipo;
-
     @OneToOne
     @JoinColumn(name = "contato_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

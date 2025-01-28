@@ -24,12 +24,12 @@ public class ParteEnvolvidaController {
     private final ParteEnvolvidaService service;
 
     @PostMapping()
-    public ResponseEntity<ParteEnvolvida> createParteEnvolvida(@RequestBody @Valid ParteEnvolvidaRequest request) {        
+    public ResponseEntity<ParteEnvolvidaResponse> createParteEnvolvida(@RequestBody @Valid ParteEnvolvidaRequest request) {        
         return ResponseEntity.ok(service.createParteEnvolvida(request));
     }
 
     @PutMapping()
-    public ResponseEntity<ParteEnvolvida> updateParteEnvolvida(@RequestBody @Valid ParteEnvolvidaRequest request) {        
+    public ResponseEntity<ParteEnvolvidaResponse> updateParteEnvolvida(@RequestBody @Valid ParteEnvolvidaRequest request) {        
         return ResponseEntity.ok(service.updateParteEnvolvida(request));
     }
 
@@ -42,10 +42,20 @@ public class ParteEnvolvidaController {
     public ResponseEntity<Boolean> existsById(@PathVariable("parte-envolvida-id") Integer parteEnvolvidaId) {
         return ResponseEntity.ok(service.existsById(parteEnvolvidaId));
     }
+
+    @GetMapping("/exists-all")
+    public ResponseEntity<Boolean> existsByIdList(@RequestBody List<Integer> partesEnvolvidasIds) {
+        return ResponseEntity.ok(service.existsByIdList(partesEnvolvidasIds));
+    }
     
     @GetMapping("/{parte-envolvida-id}")
     public ResponseEntity<ParteEnvolvidaResponse> findById(@PathVariable("parte-envolvida-id") Integer parteEnvolvidaId) {
         return ResponseEntity.ok(service.findById(parteEnvolvidaId));
+    }
+
+    @GetMapping("/find-by-ids")
+    public ResponseEntity<List<ParteEnvolvidaResponse>> findByIds(@RequestBody List<Integer> partesEnvolvidasIds) {
+        return ResponseEntity.ok(service.findByIds(partesEnvolvidasIds));
     }
 
     @DeleteMapping("/{parte-envolvida-id}")

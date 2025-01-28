@@ -4,6 +4,6 @@ public record ParteEnvolvidaResponse (
     Integer id,
     String nome,
     String cpfCnpj,
-    Contato contato
+    ContatoResponse contato
   ) {
 }
