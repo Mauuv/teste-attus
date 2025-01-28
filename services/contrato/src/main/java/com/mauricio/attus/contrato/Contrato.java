@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.validation.annotation.Validated;
 
 import com.mauricio.attus.evento.Evento;
@@ -37,7 +36,6 @@ public class Contrato {
     @Column(unique = true)
     public Integer numero;
 
-    @CreatedDate
     @Column(updatable = false)
     public LocalDateTime dataCriacao;
 
@@ -54,4 +52,8 @@ public class Contrato {
     @OneToMany(mappedBy = "parteEnvolvida", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ParteEnvolvidaContrato> contratos;
 
+    @PrePersist
+    public void prePersist() {
+        this.dataCriacao = LocalDateTime.now();
+    }
 }

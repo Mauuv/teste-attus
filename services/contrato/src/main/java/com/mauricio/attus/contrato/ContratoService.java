@@ -1,5 +1,6 @@
 package com.mauricio.attus.contrato;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,6 +16,12 @@ import com.mauricio.attus.parte_envolvida.ParteEnvolvidaContratoService;
 import com.mauricio.attus.parte_envolvida.ParteEnvolvidaResponse;
 import com.mauricio.attus.parte_envolvida.TIPO_PARTE_ENVOLVIDA;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,6 +32,7 @@ public class ContratoService {
     private final ContratoMapper mapper;
     private final ParteEnvolvidaContratoService parteEnvolvidaContratoService;
     private final EventoService eventoService;
+    private final EntityManager entityManager;
 
     public ContratoResponse createContrato(ContratoRequest request) {
         Map<Integer, TIPO_PARTE_ENVOLVIDA> tipoPartesEnvolvidas = request.partesEnvolvidas().stream()
@@ -91,5 +99,36 @@ public class ContratoService {
 
     public void deleteContrato(Integer contratoId) {
         repository.deleteById(contratoId);
+    }
+
+    public List<ContratoResponse> findByStatusOrDataCriacao(String statusContrato, LocalDateTime dataCriacao) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Contrato> criteriaQuery = criteriaBuilder.createQuery(Contrato.class);
+        
+        Root<Contrato> contratoRoot = criteriaQuery.from(Contrato.class);
+
+        Predicate[] predicates = new Predicate[2];
+        int index = 0;
+
+        if (statusContrato != null) {
+            predicates[index++] = criteriaBuilder.equal(contratoRoot.get("statusContrato"), statusContrato);
+        }
+        if (dataCriacao != null) {
+            LocalDateTime startOfDay = dataCriacao.toLocalDate().atStartOfDay();
+            LocalDateTime endOfDay = dataCriacao.toLocalDate().atTime(23, 59, 59, 999999999);
+
+            predicates[index++] = criteriaBuilder.between(contratoRoot.get("dataCriacao"), startOfDay, endOfDay);
+        }
+
+        if (index > 0) {
+            criteriaQuery.where(criteriaBuilder.and(predicates));
+        }
+
+        List<Contrato> contratos = entityManager.createQuery(criteriaQuery).getResultList();
+
+        return contratos.stream()
+                .map(mapper::toContratoResponse)
+                .toList();
     }
 }
