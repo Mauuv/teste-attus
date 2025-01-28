@@ -12,7 +12,7 @@
 	<artifactId>parte-envolvida</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>parte-envolvida</name>
-	<description>Discovery server</description>
+	<description>Parte envolvida microsservice</description>
 	<url/>
 	<licenses>
 		<license/>

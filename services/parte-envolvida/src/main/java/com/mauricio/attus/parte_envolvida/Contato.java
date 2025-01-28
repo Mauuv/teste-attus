@@ -20,9 +20,9 @@ import lombok.Setter;
 @Validated
 public class Contato {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column
-    public Long id;
+    public Integer id;
 
     @Column
     @Email(message = "O email informado é inválido")

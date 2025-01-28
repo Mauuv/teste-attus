@@ -20,14 +20,14 @@ import org.hibernate.annotations.OnDeleteAction;
 public class ParteEnvolvida {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column
-    public Long id;
+    public Integer id;
 
     @Column
     public String nome;
 
-    @Column(name = "cpj_cnpj")
+    @Column(name = "cpf_cnpj")
     public String cpfCnpj;
 
     @Column

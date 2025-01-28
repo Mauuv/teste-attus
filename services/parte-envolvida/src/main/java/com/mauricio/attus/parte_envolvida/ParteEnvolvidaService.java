@@ -50,16 +50,16 @@ public class ParteEnvolvidaService {
                 .toList();
     }
 
-    public Boolean existsById(Long parteEnvolvidaId) {
+    public Boolean existsById(Integer parteEnvolvidaId) {
         return repository.findById(parteEnvolvidaId).isPresent();
     }
 
-    public ParteEnvolvidaResponse findById(Long parteEnvolvidaId) {
+    public ParteEnvolvidaResponse findById(Integer parteEnvolvidaId) {
       return repository.findById(parteEnvolvidaId).map(mapper::toParteEnvolvidaResponse)
           .orElseThrow(() -> new ParteEnvolvidaNotFoundException("Parte envolvida de id " + parteEnvolvidaId + " não encontrada"));
     }
 
-    public void deleteParteEnvolvida(Long parteEnvolvidaId) {
+    public void deleteParteEnvolvida(Integer parteEnvolvidaId) {
         repository.deleteById(parteEnvolvidaId);
     }
 }

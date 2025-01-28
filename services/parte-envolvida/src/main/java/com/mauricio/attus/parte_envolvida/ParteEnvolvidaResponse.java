@@ -1,7 +1,7 @@
 package com.mauricio.attus.parte_envolvida;
 
 public record ParteEnvolvidaResponse (
-    Long id,
+    Integer id,
     String nome,
     String cpfCnpj,
     TIPO_PARTE_ENVOLVIDA tipo,

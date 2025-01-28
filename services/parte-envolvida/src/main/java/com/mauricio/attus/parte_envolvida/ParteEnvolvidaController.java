@@ -39,17 +39,17 @@ public class ParteEnvolvidaController {
     }
     
     @GetMapping("/exists/{parte-envolvida-id}")
-    public ResponseEntity<Boolean> existsById(@PathVariable("parte-envolvida-id") Long parteEnvolvidaId) {
+    public ResponseEntity<Boolean> existsById(@PathVariable("parte-envolvida-id") Integer parteEnvolvidaId) {
         return ResponseEntity.ok(service.existsById(parteEnvolvidaId));
     }
     
     @GetMapping("/{parte-envolvida-id}")
-    public ResponseEntity<ParteEnvolvidaResponse> findById(@PathVariable("parte-envolvida-id") Long parteEnvolvidaId) {
+    public ResponseEntity<ParteEnvolvidaResponse> findById(@PathVariable("parte-envolvida-id") Integer parteEnvolvidaId) {
         return ResponseEntity.ok(service.findById(parteEnvolvidaId));
     }
 
     @DeleteMapping("/{parte-envolvida-id}")
-    public ResponseEntity<Void> deleteById(@PathVariable("parte-envolvida-id") Long parteEnvolvidaId) {
+    public ResponseEntity<Void> deleteById(@PathVariable("parte-envolvida-id") Integer parteEnvolvidaId) {
         return ResponseEntity.accepted().build();
     }
 }
