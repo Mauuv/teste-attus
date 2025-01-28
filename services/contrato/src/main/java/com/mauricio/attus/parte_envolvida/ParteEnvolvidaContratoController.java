@@ -10,8 +10,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @RestController
 @RequestMapping("/api/v1/parte-envolvida-contrato")
@@ -23,6 +21,11 @@ public class ParteEnvolvidaContratoController {
     @GetMapping("/contrato/{contrato-id}")
     public ResponseEntity<List<ParteEnvolvidaContratoResponse>> findByContratoId(@PathVariable("contrato-id") Integer contratoId) {
         return ResponseEntity.ok(service.findByContratoId(contratoId));
+    }
+
+    @GetMapping("/parte-envolvida/{cpf-cnpj}")
+    public ResponseEntity<List<ParteEnvolvidaContratoResponse>> findByParteEnvolvidaCpfCnpj(@PathVariable("cpf-cnpj") String cpfCnpj) {
+        return ResponseEntity.ok(service.findByParteEnvolvidaCpfCnpj(cpfCnpj));
     }
     
 }

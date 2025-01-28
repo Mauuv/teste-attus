@@ -40,7 +40,7 @@ public class Evento {
     public String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "contract_id", nullable = false)
+    @JoinColumn(name = "contrato_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     public Contrato contrato;
 }
