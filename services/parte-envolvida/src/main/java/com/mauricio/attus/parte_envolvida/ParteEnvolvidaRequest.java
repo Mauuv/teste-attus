@@ -3,7 +3,7 @@ package com.mauricio.attus.parte_envolvida;
 import jakarta.validation.constraints.NotNull;
 
 public record ParteEnvolvidaRequest (
-  Integer id,
+    Integer id,
     @NotNull(message = "O nome deve ser informado")
     String nome,
     @NotNull(message = "O CPF/CNPJ deve ser informado")

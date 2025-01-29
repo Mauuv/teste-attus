@@ -8,7 +8,6 @@ create table if not exists parte_envolvida (
     id integer not null primary key,
     nome varchar(255) not null,
     cpf_cnpj varchar(14) not null,
-    tipo varchar(255) not null,
     contato_id integer constraint FK_parte_envolvida_contato references contato not null
 );
 

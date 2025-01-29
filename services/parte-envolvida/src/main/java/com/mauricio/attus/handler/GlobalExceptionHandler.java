@@ -13,29 +13,29 @@ import com.mauricio.attus.exception.ParteEnvolvidaNotFoundException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-  @ExceptionHandler(ParteEnvolvidaNotFoundException.class)
-  public ResponseEntity<String> handleParteEnvolvidaNotFoundException(ParteEnvolvidaNotFoundException ex) {
-      return ResponseEntity
-          .status(HttpStatus.NOT_FOUND)
-          .body(ex.getMessage());
-  }
+    @ExceptionHandler(ParteEnvolvidaNotFoundException.class)
+    public ResponseEntity<String> handleParteEnvolvidaNotFoundException(ParteEnvolvidaNotFoundException ex) {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(ex.getMessage());
+    }
 
-  @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-      return ResponseEntity
-          .status(HttpStatus.BAD_REQUEST)
-          .body(ex.getMessage());
-  }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(ex.getMessage());
+    }
 
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-      var errors = new HashMap<String, String>();
-      ex.getBindingResult()
-        .getFieldErrors()
-        .forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
-
-      return ResponseEntity
-          .status(HttpStatus.BAD_REQUEST)
-          .body(new ErrorResponse(errors));
-  }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        var errors = new HashMap<String, String>();
+        ex.getBindingResult()
+          .getFieldErrors()
+          .forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+  
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse(errors));
+    }
 }

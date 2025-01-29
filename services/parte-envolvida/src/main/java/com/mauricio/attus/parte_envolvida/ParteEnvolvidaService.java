@@ -17,10 +17,12 @@ public class ParteEnvolvidaService {
     private final ContatoService contatoService;
 
     public ParteEnvolvidaResponse createParteEnvolvida(ParteEnvolvidaRequest request) {
-        if (!contatoService.findById(request.contato().getId()).isPresent()) {
-            contatoService.save(request.contato());
-        }
-        ParteEnvolvida parteEnvolvida = repository.save(mapper.toParteEnvolvida(request));
+        Contato contato = request.contato();
+        if (contato.getId() == null || !contatoService.findById(contato.getId()).isPresent()) {
+            contato = contatoService.save(contato);
+        }        
+        
+        ParteEnvolvida parteEnvolvida = repository.save(mapper.toParteEnvolvida(new ParteEnvolvidaRequest(request.id(), request.nome(), request.cpfCnpj(), contato)));
         return mapper.toParteEnvolvidaResponse(parteEnvolvida);
     }
 
@@ -49,7 +51,9 @@ public class ParteEnvolvidaService {
                 contato.setEmail(contatoRequest.getTelefone());
             }
             if (!contatoRequest.equals(contato)) {
-                parteEnvolvida.setContato(contatoService.save(contatoRequest));
+                contato.setEmail(contatoRequest.getEmail());
+                contato.setTelefone(contatoRequest.getTelefone());
+                contatoService.save(contato);
             }
         }
     }
@@ -95,12 +99,5 @@ public class ParteEnvolvidaService {
             .orElseThrow(() -> new ParteEnvolvidaNotFoundException("Parte envolvida de CPF/CNPJ " + cpfCnpj + " não encontrada"));
 
         return mapper.toParteEnvolvidaResponse(parteEnvolvida);
-    }
-
-    public Contato createContato(Contato request) {
-        if (!contatoService.findById(request.getId()).isPresent()) {
-            contatoService.save(request);
-        } 
-        return request;
     }
 }
