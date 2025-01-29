@@ -21,3 +21,6 @@ server:
 application:
   config:
     parte-envolvida-url: http://localhost:8222/api/v1/parte-envolvida
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

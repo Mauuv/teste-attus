@@ -16,7 +16,7 @@ spring:
                 - id: parte-envolvida-contrato-service
                   uri: lb:http://CONTRATO-SERVICE
                   predicates:
-                      - Path=/api/v1//api/v1/parte-envolvida-contrato/**
+                      - Path=/api/v1/parte-envolvida-contrato/**
                 - id: evento-service
                   uri: lb:http://CONTRATO-SERVICE
                   predicates:
