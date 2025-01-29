@@ -2,10 +2,17 @@
   "configurations": [
     {
       "type": "java",
+      "name": "GatewayApplication",
+      "request": "launch",
+      "mainClass": "com.mauricio.gateway.GatewayApplication"
+    },
+    {
+      "type": "java",
       "name": "ContratoApplication",
       "request": "launch",
       "mainClass": "com.mauricio.attus.ContratoApplication",
-      "projectName": "contrato"
+      "projectName": "contrato",
+      "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=56269 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=contrato"
     },
     {
       "type": "java",
