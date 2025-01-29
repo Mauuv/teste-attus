@@ -1,0 +1,25 @@
+spring:
+    cloud:
+        gateway:
+            discovery:
+                locator:
+                    enabled: true
+            routes:
+                - id: parte-envolvida-service
+                  uri: lb:http://PARTE-ENVOLVIDA-SERVICE
+                  predicates:
+                      - Path=/api/v1/parte-envolvida/**
+                - id: contrato-service
+                  uri: lb:http://CONTRATO-SERVICE
+                  predicates:
+                      - Path=/api/v1/contrato/**
+                - id: parte-envolvida-contrato-service
+                  uri: lb:http://CONTRATO-SERVICE
+                  predicates:
+                      - Path=/api/v1//api/v1/parte-envolvida-contrato/**
+                - id: evento-service
+                  uri: lb:http://CONTRATO-SERVICE
+                  predicates:
+                      - Path=/api/v1/evento/**
+server:
+    port: 8222
