@@ -1,4 +1,4 @@
-package com.mauricio.attus;
+package com.mauricio;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

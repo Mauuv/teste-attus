@@ -42,7 +42,9 @@ public class ContratoService {
 
         List<ParteEnvolvidaResponse> partesEnvolvidas = parteEnvolvidaContratoService.findAllPartesEnvolvidas(request.partesEnvolvidas());
 
-        Contrato contrato = repository.save(mapper.toContrato(request));
+        Contrato contratoSalvar = mapper.toContrato(request);
+        contratoSalvar.setStatusContrato(contratoSalvar.getStatusContrato() == null ? ESTADO_CONTRATO.ATIVO : contratoSalvar.getStatusContrato());
+        Contrato contrato = repository.save(contratoSalvar);
 
         partesEnvolvidas.forEach(parteEnvolvida -> {
             parteEnvolvidaContratoService.saveParteEnvolvida(

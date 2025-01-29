@@ -12,7 +12,7 @@ Pontos de melhoria:
 Como rodar o projeto:
 
 Tecnologias necessárias:
- - Java versão 21
+ - Java versão 21 (com o plugin Lombok)
  - Maven 3
  - Docker
 
