@@ -3,9 +3,15 @@ package com.mauricio.attus.evento;
 import org.springframework.stereotype.Service;
 
 import com.mauricio.attus.contrato.Contrato;
+import com.mauricio.attus.contrato.ContratoMapper;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class EventoMapper {
+
+    private final ContratoMapper contratoMapper;
 
     public Evento toEvento(EventoRequest request) {
         return Evento.builder()
@@ -30,7 +36,7 @@ public class EventoMapper {
             evento.getTipo(),
             evento.getDataRegistro(),
             evento.getDescricao(),
-            evento.getContrato()
+            contratoMapper.toContratoResponse(evento.getContrato())
         );
     }
 }

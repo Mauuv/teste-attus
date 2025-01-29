@@ -3,9 +3,15 @@ package com.mauricio.attus.parte_envolvida;
 import org.springframework.stereotype.Service;
 
 import com.mauricio.attus.contrato.Contrato;
+import com.mauricio.attus.contrato.ContratoMapper;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ParteEnvolvidaContratoMapper {
+
+    private final ContratoMapper contratoMapper;
 
     public ParteEnvolvidaContrato toParteEnvolvidaContrato(ParteEnvolvidaContratoRequest request) {
         return ParteEnvolvidaContrato.builder()
@@ -27,7 +33,7 @@ public class ParteEnvolvidaContratoMapper {
             parteEnvolvidaContrato.getId(),
             parteEnvolvidaContrato.getParteEnvolvidaId(),
             parteEnvolvidaContrato.getTipoParteEnvolvida(),
-            parteEnvolvidaContrato.getContrato()
+            contratoMapper.toContratoResponse(parteEnvolvidaContrato.getContrato())
         );
     }
 
