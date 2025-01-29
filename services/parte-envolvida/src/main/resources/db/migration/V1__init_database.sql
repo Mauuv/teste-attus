@@ -10,8 +10,9 @@ create table if not exists parte_envolvida (
     cpf_cnpj varchar(14) not null,
     tipo varchar(255) not null,
     contato_id integer constraint FK_parte_envolvida_contato references contato not null
-    index idx_cpf_cnpj (cpf_cnpj)
 );
 
 create sequence if not exists parte_envolvida_seq increment by 50;
 create sequence if not exists contato_seq increment by 50;
+
+create index if not exists idx_cpf_cnpj on parte_envolvida (cpf_cnpj);

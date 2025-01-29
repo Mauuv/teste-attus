@@ -42,14 +42,14 @@ public class Contrato {
     @Column
     public String descricao;
 
-    @Column
+    @Column(name = "status_contrato")
     @Enumerated(EnumType.STRING)
     ESTADO_CONTRATO statusContrato;
 
     @OneToMany(mappedBy = "contrato", cascade = CascadeType.ALL)
     private List<Evento> events;
 
-    @OneToMany(mappedBy = "parteEnvolvida", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "contrato", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ParteEnvolvidaContrato> contratos;
 
     @PrePersist

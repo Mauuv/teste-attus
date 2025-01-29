@@ -4,8 +4,6 @@ create table if not exists contrato (
     data_criacao timestamp not null default CURRENT_TIMESTAMP,
     descricao text,
     status_contrato varchar(50)
-    index idx_status_contrato (status_contrato),
-    index idx_data_criacao (data_criacao)
 );
 
 create table if not exists evento (
@@ -29,3 +27,6 @@ create table if not exists parte_envolvida_contrato (
 create sequence if not exists evento_seq increment by 50;
 create sequence if not exists contrato_seq increment by 50;
 create sequence if not exists parte_envolvida_contrato_seq increment by 50;
+
+create index if not exists idx_status_contrato on contrato (status_contrato);
+create index if not exists idx_data_criacao on contrato (data_criacao);
