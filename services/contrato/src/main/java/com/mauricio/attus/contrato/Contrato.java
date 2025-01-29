@@ -29,7 +29,7 @@ import com.mauricio.attus.parte_envolvida.ParteEnvolvidaContrato;
 @Validated
 public class Contrato {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column
     public Integer id;
 

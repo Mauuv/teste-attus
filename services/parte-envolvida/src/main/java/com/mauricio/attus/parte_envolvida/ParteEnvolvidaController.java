@@ -43,7 +43,7 @@ public class ParteEnvolvidaController {
         return ResponseEntity.ok(service.existsById(parteEnvolvidaId));
     }
 
-    @GetMapping("/exists-all")
+    @PostMapping("/exists-all")
     public ResponseEntity<Boolean> existsByIdList(@RequestBody List<Integer> partesEnvolvidasIds) {
         return ResponseEntity.ok(service.existsByIdList(partesEnvolvidasIds));
     }
@@ -53,7 +53,7 @@ public class ParteEnvolvidaController {
         return ResponseEntity.ok(service.findById(parteEnvolvidaId));
     }
 
-    @GetMapping("/find-by-ids")
+    @PostMapping("/find-by-ids")
     public ResponseEntity<List<ParteEnvolvidaResponse>> findByIds(@RequestBody List<Integer> partesEnvolvidasIds) {
         return ResponseEntity.ok(service.findByIds(partesEnvolvidasIds));
     }

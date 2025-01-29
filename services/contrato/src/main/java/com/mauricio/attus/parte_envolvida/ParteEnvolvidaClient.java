@@ -23,7 +23,7 @@ public class ParteEnvolvidaClient {
 
     @Value("${application.config.parte-envolvida-url}")
     private String parteEnvolvidaUrl;
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public List<ParteEnvolvidaResponse> findAllPartesEnvolvidas(List<ParteEnvolvidaContratoRequest> requestBody) {
         var partesEnvolvidasId = requestBody.stream().map(ParteEnvolvidaContratoRequest::id).toList();
@@ -38,7 +38,7 @@ public class ParteEnvolvidaClient {
         
         ParameterizedTypeReference<List<ParteEnvolvidaResponse>> responseType = new ParameterizedTypeReference<>() {};
 
-        ResponseEntity<List<ParteEnvolvidaResponse>> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, responseType);
+        ResponseEntity<List<ParteEnvolvidaResponse>> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, responseType);
         
         if (responseEntity.getStatusCode().isError()) {
             throw new BussinesException("Erro ao buscar/processar as partes envolvidas. Status code: " + responseEntity.getStatusCode());
@@ -56,7 +56,7 @@ public class ParteEnvolvidaClient {
         
         ParameterizedTypeReference<Boolean> responseType = new ParameterizedTypeReference<>() {};
 
-        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, responseType);
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, responseType);
 
         return responseEntity.getStatusCode().isError() || !responseEntity.getBody();
     }

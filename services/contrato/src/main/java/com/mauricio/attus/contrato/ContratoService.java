@@ -1,6 +1,7 @@
 package com.mauricio.attus.contrato;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,8 +40,10 @@ public class ContratoService {
                 ParteEnvolvidaContratoRequest::id,
                 ParteEnvolvidaContratoRequest::tipoParteEnvolvida
             ));
-
-        List<ParteEnvolvidaResponse> partesEnvolvidas = parteEnvolvidaContratoService.findAllPartesEnvolvidas(request.partesEnvolvidas());
+        List<ParteEnvolvidaResponse> partesEnvolvidas = new ArrayList<>();
+        if (!request.partesEnvolvidas().isEmpty()) {
+            partesEnvolvidas = parteEnvolvidaContratoService.findAllPartesEnvolvidas(request.partesEnvolvidas());
+        }
 
         Contrato contratoSalvar = mapper.toContrato(request);
         contratoSalvar.setStatusContrato(contratoSalvar.getStatusContrato() == null ? ESTADO_CONTRATO.ATIVO : contratoSalvar.getStatusContrato());

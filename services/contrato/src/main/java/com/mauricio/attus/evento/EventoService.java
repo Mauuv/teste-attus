@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EventoService {
 
-    public EventoRepository repository;
-    public EventoMapper mapper;
+    private final EventoRepository repository;
+    private final EventoMapper mapper;
 
     public Integer saveEvento(EventoRequest request) {
         var evento = mapper.toEvento(request);
