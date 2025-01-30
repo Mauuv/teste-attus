@@ -14,9 +14,9 @@ public class ParteEnvolvidaContratoService {
     private final ParteEnvolvidaContratoMapper mapper;
     private final ParteEnvolvidaClient parteEnvolvidaClient;
 
-    public Integer saveParteEnvolvida(ParteEnvolvidaContratoRequest request) {
+    public ParteEnvolvidaContratoResponse saveParteEnvolvida(ParteEnvolvidaContratoRequest request) {
         var parteEnvolvidaContrato = mapper.toParteEnvolvidaContrato(request);
-        return repository.save(parteEnvolvidaContrato).getId();
+        return mapper.toParteEnvolvidaContratoResponse(repository.save(parteEnvolvidaContrato));
     }
 
     public List<ParteEnvolvidaContratoResponse> findByContratoId(Integer contratoId) {
@@ -36,5 +36,16 @@ public class ParteEnvolvidaContratoService {
 
     public List<ParteEnvolvidaResponse> findAllPartesEnvolvidas(List<ParteEnvolvidaContratoRequest> partesEnvolvidas) {
         return parteEnvolvidaClient.findAllPartesEnvolvidas(partesEnvolvidas);
+    }
+
+    public List<ParteEnvolvidaContratoResponse> findAll() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::toParteEnvolvidaContratoResponse)
+                .toList();
+    }
+
+    public void deleteParteEnvolvidaContrato(Integer parteEnvolvidaContratoId) {
+        repository.deleteById(parteEnvolvidaContratoId);
     }
 }
